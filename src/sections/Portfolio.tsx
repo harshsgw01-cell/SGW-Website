@@ -1,8 +1,8 @@
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState, useLayoutEffect } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AnimatedSection } from '@/components/AnimatedSection'
 
@@ -53,28 +53,35 @@ const projects = [
   },
 ]
 
-function ProjectCard({ project, index }: { project: (typeof projects)[0]; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null)
+function ProjectCard({ project, index, progress }: { project: (typeof projects)[0]; index: number; progress: number }) {
   const [isHovered, setIsHovered] = useState(false)
+  
+  // Calculate card-specific progress for staggered animations
+  const cardStart = index / projects.length
+  const cardEnd = (index + 1) / projects.length
+  const cardProgress = Math.max(0, Math.min(1, (progress - cardStart) / (cardEnd - cardStart)))
+  
+  // Scale and opacity based on progress
+  const scale = 0.8 + cardProgress * 0.2
+  const opacity = 0.5 + cardProgress * 0.5
 
   return (
     <motion.div
-      ref={cardRef}
-      className="flex-none w-[350px] lg:w-[420px] snap-center"
-      initial={{ opacity: 0, x: 50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="flex-none w-[380px] lg:w-[450px] h-[520px] lg:h-[580px] portfolio-card"
+      style={{
+        transform: `scale(${scale})`,
+        opacity: opacity,
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <motion.div
-        className="group relative h-full rounded-3xl bg-card/80 backdrop-blur-sm border border-border overflow-hidden"
-        whileHover={{ y: -10, scale: 1.02 }}
+        className="group relative h-full rounded-3xl bg-card/90 backdrop-blur-sm border border-border overflow-hidden card-lift"
+        whileHover={{ y: -10 }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
       >
         {/* Image */}
-        <div className="relative h-56 overflow-hidden">
+        <div className="relative h-56 lg:h-64 overflow-hidden">
           <motion.img
             src={project.image}
             alt={project.title}
@@ -84,7 +91,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             transition={{ duration: 0.6 }}
           />
           <div className={cn('absolute inset-0 bg-gradient-to-t', project.gradient, 'opacity-50')} />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
           {/* Overlay buttons */}
           <motion.div
@@ -96,14 +103,14 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-4 rounded-full bg-white/90 text-black shadow-lg backdrop-blur-sm"
+              className="p-4 rounded-full bg-white/90 text-black shadow-lg backdrop-blur-sm glow-primary"
             >
               <ExternalLink className="w-5 h-5" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="p-4 rounded-full bg-white/90 text-black shadow-lg backdrop-blur-sm"
+              className="p-4 rounded-full bg-white/90 text-black shadow-lg backdrop-blur-sm glow-accent"
             >
               <Github className="w-5 h-5" />
             </motion.button>
@@ -112,7 +119,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           {/* Floating badge */}
           <motion.div
             className={cn(
-              'absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-medium text-white bg-gradient-to-r backdrop-blur-sm',
+              'absolute top-4 left-4 px-4 py-2 rounded-full text-sm font-semibold text-white bg-gradient-to-r shadow-lg',
               project.gradient
             )}
             initial={{ opacity: 0, y: -20 }}
@@ -128,7 +135,7 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
           <h3 className="text-xl lg:text-2xl font-bold font-[var(--font-heading)] mb-3 group-hover:text-primary transition-colors">
             {project.title}
           </h3>
-          <p className="text-muted-foreground text-sm lg:text-base mb-6 line-clamp-2 leading-relaxed">
+          <p className="text-muted-foreground text-sm lg:text-base mb-6 leading-relaxed line-clamp-3">
             {project.description}
           </p>
 
@@ -137,8 +144,8 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
             {project.tags.map((tag) => (
               <motion.span
                 key={tag}
-                className="text-xs px-3 py-1.5 rounded-full bg-secondary/80 text-muted-foreground border border-border/50"
-                whileHover={{ scale: 1.05, backgroundColor: 'var(--color-primary)', color: 'var(--color-primary-foreground)' }}
+                className="text-xs px-3 py-1.5 rounded-full bg-secondary/80 text-muted-foreground border border-border/50 hover:border-primary/30 hover:bg-primary/10 hover:text-primary transition-all cursor-default"
+                whileHover={{ scale: 1.05 }}
               >
                 {tag}
               </motion.span>
@@ -147,13 +154,13 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         </div>
 
         {/* Glow effect */}
-        <div
+        <motion.div
           className={cn(
-            'absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl',
+            'absolute -inset-1 opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none rounded-3xl blur-2xl',
             'bg-gradient-to-r',
             project.gradient
           )}
-          style={{ filter: 'blur(40px)', transform: 'translateY(20px)', opacity: isHovered ? 0.2 : 0 }}
+          animate={{ opacity: isHovered ? 0.3 : 0 }}
         />
       </motion.div>
     </motion.div>
@@ -162,11 +169,11 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
 
 export function Portfolio() {
   const sectionRef = useRef<HTMLElement>(null)
+  const triggerRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef(null)
   const isInView = useInView(headerRef, { once: true, margin: '-100px' })
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(true)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -175,63 +182,90 @@ export function Portfolio() {
 
   const backgroundX = useTransform(scrollYProgress, [0, 1], ['-10%', '10%'])
 
-  const checkScrollPosition = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current
-      setCanScrollLeft(scrollLeft > 0)
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10)
-    }
-  }
+  // Horizontal scroll with GSAP ScrollTrigger
+  useLayoutEffect(() => {
+    const section = sectionRef.current
+    const trigger = triggerRef.current
+    const scrollContainer = scrollContainerRef.current
+    
+    if (!section || !trigger || !scrollContainer) return
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400
-      scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      })
-    }
-  }
+    const cards = scrollContainer.querySelectorAll('.portfolio-card')
+    const totalWidth = scrollContainer.scrollWidth - window.innerWidth + 200
 
-  useEffect(() => {
-    const container = scrollContainerRef.current
-    if (container) {
-      container.addEventListener('scroll', checkScrollPosition)
-      checkScrollPosition()
-      return () => container.removeEventListener('scroll', checkScrollPosition)
-    }
-  }, [])
-
-  useEffect(() => {
     const ctx = gsap.context(() => {
-      // Horizontal scroll trigger for parallax effect
+      // Main horizontal scroll animation
+      const horizontalScroll = gsap.to(scrollContainer, {
+        x: () => -totalWidth,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: trigger,
+          start: 'top top',
+          end: () => `+=${totalWidth}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            setScrollProgress(self.progress)
+          },
+        },
+      })
+
+      // Individual card animations
+      cards.forEach((card, index) => {
+        gsap.fromTo(
+          card,
+          {
+            opacity: 0.5,
+            scale: 0.85,
+            rotateY: 15,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            rotateY: 0,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: card,
+              containerAnimation: horizontalScroll,
+              start: 'left 80%',
+              end: 'left 20%',
+              scrub: true,
+            },
+          }
+        )
+      })
+
+      // Background animation
       gsap.to('.portfolio-bg', {
         xPercent: -20,
         ease: 'none',
         scrollTrigger: {
-          trigger: sectionRef.current,
+          trigger: trigger,
           start: 'top bottom',
           end: 'bottom top',
           scrub: 1,
         },
       })
-    }, sectionRef)
+    }, section)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={sectionRef} id="portfolio" className="relative py-24 lg:py-32 overflow-hidden">
+    <section ref={sectionRef} id="portfolio" className="relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           style={{ x: backgroundX }}
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 rounded-full blur-[150px] portfolio-bg"
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[1400px] h-[600px] bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-full blur-[200px] portfolio-bg"
         />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <AnimatedSection className="text-center mb-16">
+      {/* Header section - outside pinned area */}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 lg:pt-32 pb-12">
+        <AnimatedSection className="text-center">
           <div ref={headerRef}>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
@@ -247,7 +281,7 @@ export function Portfolio() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-bold font-[var(--font-heading)] mb-6 text-balance"
             >
-              Featured <span className="gradient-text">Projects</span>
+              Featured <span className="gradient-text-animated">Projects</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -260,66 +294,88 @@ export function Portfolio() {
             </motion.p>
           </div>
         </AnimatedSection>
+      </div>
 
-        {/* Navigation arrows */}
-        <div className="flex justify-end gap-2 mb-6">
-          <motion.button
-            onClick={() => scroll('left')}
-            disabled={!canScrollLeft}
-            className={cn(
-              'p-3 rounded-full border transition-all duration-300',
-              canScrollLeft
-                ? 'border-border hover:border-primary hover:bg-primary/10 text-foreground'
-                : 'border-border/50 text-muted-foreground/50 cursor-not-allowed'
-            )}
-            whileHover={canScrollLeft ? { scale: 1.05 } : {}}
-            whileTap={canScrollLeft ? { scale: 0.95 } : {}}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </motion.button>
-          <motion.button
-            onClick={() => scroll('right')}
-            disabled={!canScrollRight}
-            className={cn(
-              'p-3 rounded-full border transition-all duration-300',
-              canScrollRight
-                ? 'border-border hover:border-primary hover:bg-primary/10 text-foreground'
-                : 'border-border/50 text-muted-foreground/50 cursor-not-allowed'
-            )}
-            whileHover={canScrollRight ? { scale: 1.05 } : {}}
-            whileTap={canScrollRight ? { scale: 0.95 } : {}}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </motion.button>
-        </div>
-
-        {/* Horizontal scroll container */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-6 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} project={project} index={index} />
-          ))}
-        </div>
-
-        {/* Scroll indicator dots */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
-          className="flex justify-center gap-2 mt-8"
-        >
+      {/* Horizontal Scroll Trigger Area */}
+      <div ref={triggerRef} className="relative min-h-screen">
+        {/* Progress indicator */}
+        <div className="fixed top-1/2 right-8 -translate-y-1/2 z-50 hidden lg:flex flex-col gap-2">
           {projects.map((_, index) => (
             <motion.div
               key={index}
-              className="w-2 h-2 rounded-full bg-border"
-              whileHover={{ scale: 1.5, backgroundColor: 'var(--color-primary)' }}
+              className={cn(
+                'w-2 h-2 rounded-full transition-all duration-300',
+                scrollProgress >= index / projects.length && scrollProgress <= (index + 1) / projects.length
+                  ? 'w-2 h-8 bg-gradient-to-b from-primary to-accent'
+                  : 'bg-border'
+              )}
             />
           ))}
+        </div>
+
+        {/* Scroll hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: scrollProgress < 0.1 ? 1 : 0 }}
+          className="absolute top-8 left-1/2 -translate-x-1/2 text-muted-foreground text-sm flex items-center gap-2"
+        >
+          <span>Scroll to explore</span>
+          <motion.span
+            animate={{ x: [0, 10, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            →
+          </motion.span>
         </motion.div>
+
+        {/* Horizontal scroll container */}
+        <div className="h-screen flex items-center overflow-hidden">
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-8 pl-[10vw] pr-[20vw] will-change-transform"
+            style={{ perspective: '1000px' }}
+          >
+            {projects.map((project, index) => (
+              <ProjectCard 
+                key={project.title} 
+                project={project} 
+                index={index}
+                progress={scrollProgress}
+              />
+            ))}
+            
+            {/* End card - CTA */}
+            <motion.div className="flex-none w-[380px] lg:w-[450px] h-[520px] lg:h-[580px] flex items-center justify-center portfolio-card">
+              <div className="text-center glass-card rounded-3xl p-12 border-gradient">
+                <motion.div
+                  className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg glow-primary"
+                  animate={{ rotate: [0, 5, -5, 0] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                >
+                  <span className="text-3xl font-bold text-white">+</span>
+                </motion.div>
+                <h3 className="text-2xl font-bold font-[var(--font-heading)] mb-4">
+                  Have a Project in Mind?
+                </h3>
+                <p className="text-muted-foreground mb-8">
+                  {"Let's discuss how we can bring your vision to life."}
+                </p>
+                <motion.button
+                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold shadow-lg btn-glow"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Start a Conversation
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
       </div>
+
+      {/* Bottom spacer for scroll continuation */}
+      <div className="h-24" />
     </section>
   )
 }

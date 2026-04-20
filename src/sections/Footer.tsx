@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion'
 import { useRef } from 'react'
 import { Github, Linkedin, Twitter, Instagram, ArrowUp, Heart } from 'lucide-react'
+import { Section3D } from '@/components/Section3D'
 
 const footerLinks = {
   services: [
@@ -47,6 +48,9 @@ export function Footer() {
 
   return (
     <footer ref={footerRef} className="relative bg-card/80 backdrop-blur-sm border-t border-border overflow-hidden">
+      {/* 3D Background */}
+      <Section3D variant="footer" />
+
       {/* Background gradient */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1400px] h-[300px] bg-gradient-to-t from-primary/5 via-accent/5 to-transparent rounded-full blur-[150px]" />

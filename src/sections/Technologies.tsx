@@ -3,6 +3,7 @@ import { useRef, useEffect, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection'
+import { Section3D } from '@/components/Section3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -66,6 +67,9 @@ export function Technologies() {
 
   return (
     <section ref={sectionRef} id="technologies" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* 3D Background */}
+      <Section3D variant="technologies" />
+
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div

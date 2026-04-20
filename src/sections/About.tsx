@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Target, Eye, Award, Users, Lightbulb, Shield } from 'lucide-react'
 import { TiltCard } from '@/components/TiltCard'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection'
+import { Section3D } from '@/components/Section3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -79,6 +80,9 @@ export function About() {
 
   return (
     <section ref={sectionRef} id="about" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* 3D Background */}
+      <Section3D variant="about" />
+
       {/* Background elements with parallax */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div

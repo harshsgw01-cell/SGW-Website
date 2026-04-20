@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { Search, Lightbulb, Code2, Rocket, Settings, HeadphonesIcon } from 'lucide-react'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection'
+import { Section3D } from '@/components/Section3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -118,6 +119,9 @@ export function Process() {
 
   return (
     <section ref={sectionRef} id="process" className="relative py-24 lg:py-32 overflow-hidden">
+      {/* 3D Background */}
+      <Section3D variant="process" />
+
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div

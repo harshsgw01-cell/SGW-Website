@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Sun, Moon } from 'lucide-react'
+import { Menu, X, Sun, Moon, Monitor } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { cn } from '@/lib/utils'
+import { MagneticWrap } from '@/components/GlowButton'
 
 const navLinks = [
   { name: 'Home', href: '#hero' },
@@ -111,18 +112,30 @@ export function Navbar() {
 
             {/* Actions */}
             <div className="flex items-center gap-2">
-              <motion.button
-                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-lg hover:bg-secondary transition-colors"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {resolvedTheme === 'dark' ? (
-                  <Sun className="w-5 h-5" />
-                ) : (
-                  <Moon className="w-5 h-5" />
-                )}
-              </motion.button>
+              <MagneticWrap strength={0.3}>
+                <motion.button
+                  onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+                  className="relative p-2.5 rounded-xl glass border border-border/50 hover:border-primary/30 transition-all group overflow-hidden"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label="Toggle theme"
+                >
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity"
+                  />
+                  <motion.div
+                    initial={false}
+                    animate={{ rotate: resolvedTheme === 'dark' ? 0 : 180 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {resolvedTheme === 'dark' ? (
+                      <Sun className="w-5 h-5 text-yellow-400" />
+                    ) : (
+                      <Moon className="w-5 h-5 text-primary" />
+                    )}
+                  </motion.div>
+                </motion.button>
+              </MagneticWrap>
 
               <motion.a
                 href="#contact"

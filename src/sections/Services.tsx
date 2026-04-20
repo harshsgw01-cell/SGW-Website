@@ -19,6 +19,7 @@ import {
 import { cn } from '@/lib/utils'
 import { TiltCard } from '@/components/TiltCard'
 import { AnimatedSection, StaggerContainer, StaggerItem } from '@/components/AnimatedSection'
+import { Section3D } from '@/components/Section3D'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -303,6 +304,9 @@ export function Services() {
       id="services"
       className="relative py-24 lg:py-32 overflow-hidden"
     >
+      {/* 3D Background */}
+      <Section3D variant="services" />
+
       {/* Background patterns */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] services-bg-blob" />
