@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useEffect, useState } from 'react'
 import { ThemeProvider, useTheme } from '@/hooks/useTheme'
 import { useLenis } from '@/hooks/useLenis'
 import { Navbar } from '@/components/Navbar'
@@ -18,6 +18,7 @@ import { Footer } from '@/sections/Footer'
 function CursorGlow() {
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [isVisible, setIsVisible] = useState(false)
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -40,13 +41,24 @@ function CursorGlow() {
 
   if (!isVisible) return null
 
+  const glowOpacity = resolvedTheme === 'dark' ? 0.08 : 0.04
+
   return (
     <div
       className="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300 hidden lg:block"
       style={{
-        background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(139, 92, 246, 0.06), transparent 40%)`,
+        background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(139, 92, 246, ${glowOpacity}), transparent 40%)`,
       }}
     />
+  )
+}
+
+// Section divider component
+function SectionDivider() {
+  return (
+    <div className="relative h-px">
+      <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+    </div>
   )
 }
 
@@ -57,21 +69,17 @@ function AppContent() {
   useLenis()
 
   useEffect(() => {
-    // Mark as loaded after initial render
     setIsLoaded(true)
-    
-    // Apply theme classes to body
-    document.body.classList.remove('light', 'dark')
-    document.body.classList.add(resolvedTheme)
-  }, [resolvedTheme])
+  }, [])
 
   return (
     <>
       {/* Loading screen */}
       <LoadingScreen minDuration={1500} />
       
-      <div className="min-h-screen bg-background text-foreground">
-        {/* Mesh gradient background */}
+      {/* Main app container - uses theme-aware background */}
+      <div className="min-h-screen bg-background text-foreground relative">
+        {/* Mesh gradient background - theme aware */}
         <div className="fixed inset-0 mesh-gradient pointer-events-none" />
         
         {/* Noise texture overlay */}
@@ -85,48 +93,19 @@ function AppContent() {
         
         <main className="relative">
           <Hero />
-          
-          {/* Section divider */}
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <About />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Services />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Process />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Technologies />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Portfolio />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Testimonials />
-          
-          <div className="relative h-px">
-            <div className="absolute inset-x-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
-          </div>
-          
+          <SectionDivider />
           <Contact />
         </main>
         

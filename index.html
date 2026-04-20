@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -11,33 +11,67 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-      /* Prevent FOUC - Flash of Unstyled Content */
+      /* CRITICAL: Prevent Flash of Unstyled Content (FOUC) */
+      /* Set default background BEFORE any CSS loads */
+      :root {
+        --bg-light: #fafafa;
+        --bg-dark: #0a0a0f;
+        --text-light: #0a0a0f;
+        --text-dark: #fafafa;
+      }
+      
       html {
-        background-color: #0a0a0f;
+        background-color: var(--bg-light);
+        color: var(--text-light);
       }
-      html.light {
-        background-color: #fafafa;
+      
+      html.dark {
+        background-color: var(--bg-dark) !important;
+        color: var(--text-dark) !important;
       }
-      /* Smooth theme transition */
+      
+      body {
+        background-color: inherit;
+        color: inherit;
+        margin: 0;
+      }
+      
+      /* Smooth theme transition when class changes */
+      html.transitioning,
       html.transitioning * {
         transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
       }
     </style>
     <script>
-      // Immediately apply theme to prevent flash
+      // CRITICAL: Apply theme IMMEDIATELY before DOM renders to prevent flash
       (function() {
-        const theme = localStorage.getItem('theme') || 'system';
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        const resolvedTheme = theme === 'system' ? systemTheme : theme;
-        document.documentElement.classList.add(resolvedTheme);
-        
-        // Update theme-color meta tag
-        const themeColor = resolvedTheme === 'dark' ? '#0a0a0f' : '#fafafa';
-        document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor);
+        try {
+          var theme = localStorage.getItem('theme');
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var isDark = theme === 'dark' || (theme === 'system' && systemDark) || (!theme && systemDark);
+          
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.backgroundColor = '#0a0a0f';
+            document.documentElement.style.color = '#fafafa';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.backgroundColor = '#fafafa';
+            document.documentElement.style.color = '#0a0a0f';
+          }
+          
+          // Update theme-color meta tag
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute('content', isDark ? '#0a0a0f' : '#fafafa');
+          }
+        } catch (e) {
+          console.error('Theme initialization error:', e);
+        }
       })();
     </script>
   </head>
-  <body class="bg-background text-foreground antialiased">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

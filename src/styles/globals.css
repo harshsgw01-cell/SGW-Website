@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
+/* ============================================
+   THEME CONFIGURATION - TAILWIND V4
+   ============================================ */
 @theme inline {
-  --color-background: oklch(0.985 0.005 280);
-  --color-foreground: oklch(0.12 0.02 280);
-  --color-card: oklch(0.99 0.005 280);
-  --color-card-foreground: oklch(0.12 0.02 280);
-  --color-popover: oklch(0.99 0.005 280);
-  --color-popover-foreground: oklch(0.12 0.02 280);
-  --color-primary: oklch(0.55 0.25 265);
-  --color-primary-foreground: oklch(0.99 0 0);
-  --color-secondary: oklch(0.96 0.01 280);
-  --color-secondary-foreground: oklch(0.18 0.02 280);
-  --color-muted: oklch(0.96 0.01 280);
-  --color-muted-foreground: oklch(0.5 0.02 280);
-  --color-accent: oklch(0.65 0.22 300);
-  --color-accent-foreground: oklch(0.18 0.02 280);
-  --color-destructive: oklch(0.577 0.245 27.325);
-  --color-destructive-foreground: oklch(0.577 0.245 27.325);
-  --color-border: oklch(0.9 0.01 280);
-  --color-input: oklch(0.9 0.01 280);
-  --color-ring: oklch(0.7 0.15 265);
-  --color-neon-blue: oklch(0.7 0.22 250);
-  --color-neon-purple: oklch(0.65 0.25 290);
-  --color-neon-cyan: oklch(0.8 0.15 200);
-  --color-neon-pink: oklch(0.75 0.2 350);
+  /* Light mode colors (default) */
+  --color-background: #fafafa;
+  --color-foreground: #0a0a0f;
+  --color-card: #ffffff;
+  --color-card-foreground: #0a0a0f;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0a0a0f;
+  --color-primary: #7c3aed;
+  --color-primary-foreground: #fafafa;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #18181b;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #a855f7;
+  --color-accent-foreground: #18181b;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #7c3aed;
+  --color-neon-blue: #3b82f6;
+  --color-neon-purple: #a855f7;
+  --color-neon-cyan: #06b6d4;
+  --color-neon-pink: #ec4899;
   --radius-sm: 0.375rem;
   --radius-md: 0.625rem;
   --radius-lg: 1rem;
@@ -34,30 +38,44 @@
   --font-heading: "Poppins", "Poppins Fallback", system-ui, sans-serif;
 }
 
+/* ============================================
+   DARK MODE - CRITICAL FIX
+   ============================================ */
 .dark {
-  --color-background: oklch(0.06 0.02 280);
-  --color-foreground: oklch(0.96 0.01 280);
-  --color-card: oklch(0.1 0.02 280);
-  --color-card-foreground: oklch(0.96 0.01 280);
-  --color-popover: oklch(0.1 0.02 280);
-  --color-popover-foreground: oklch(0.96 0.01 280);
-  --color-primary: oklch(0.7 0.25 265);
-  --color-primary-foreground: oklch(0.06 0.02 280);
-  --color-secondary: oklch(0.14 0.02 280);
-  --color-secondary-foreground: oklch(0.96 0.01 280);
-  --color-muted: oklch(0.14 0.02 280);
-  --color-muted-foreground: oklch(0.6 0.02 280);
-  --color-accent: oklch(0.7 0.22 300);
-  --color-accent-foreground: oklch(0.96 0.01 280);
-  --color-border: oklch(0.22 0.02 280);
-  --color-input: oklch(0.22 0.02 280);
-  --color-ring: oklch(0.6 0.25 265);
-  --color-neon-blue: oklch(0.75 0.22 250);
-  --color-neon-purple: oklch(0.7 0.25 290);
-  --color-neon-cyan: oklch(0.85 0.15 200);
-  --color-neon-pink: oklch(0.8 0.2 350);
+  --color-background: #0a0a0f !important;
+  --color-foreground: #fafafa !important;
+  --color-card: #18181b !important;
+  --color-card-foreground: #fafafa !important;
+  --color-popover: #18181b !important;
+  --color-popover-foreground: #fafafa !important;
+  --color-primary: #8b5cf6 !important;
+  --color-primary-foreground: #0a0a0f !important;
+  --color-secondary: #27272a !important;
+  --color-secondary-foreground: #fafafa !important;
+  --color-muted: #27272a !important;
+  --color-muted-foreground: #a1a1aa !important;
+  --color-accent: #c084fc !important;
+  --color-accent-foreground: #fafafa !important;
+  --color-border: #3f3f46 !important;
+  --color-input: #3f3f46 !important;
+  --color-ring: #8b5cf6 !important;
+  --color-neon-blue: #60a5fa !important;
+  --color-neon-purple: #c084fc !important;
+  --color-neon-cyan: #22d3ee !important;
+  --color-neon-pink: #f472b6 !important;
 }
 
+/* Ensure html and body get dark backgrounds */
+html.dark,
+.dark body,
+html.dark body {
+  background-color: #0a0a0f !important;
+  color: #fafafa !important;
+}
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 * {
   border-color: var(--color-border);
 }
@@ -65,6 +83,11 @@
 html {
   scroll-behavior: auto;
   background-color: var(--color-background);
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -74,9 +97,32 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
 }
 
-/* Lenis smooth scroll */
+/* ============================================
+   SECTION BACKGROUNDS - DARK MODE FIX
+   ============================================ */
+section {
+  background-color: transparent;
+}
+
+/* Cards and containers in dark mode */
+.dark .bg-card\/80,
+.dark .bg-card\/50,
+.dark [class*="bg-card"] {
+  background-color: rgba(24, 24, 27, 0.8) !important;
+}
+
+.dark .bg-secondary\/50,
+.dark .bg-secondary\/80,
+.dark [class*="bg-secondary"] {
+  background-color: rgba(39, 39, 42, 0.5) !important;
+}
+
+/* ============================================
+   LENIS SMOOTH SCROLL
+   ============================================ */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -98,7 +144,9 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Noise texture overlay */
+/* ============================================
+   NOISE TEXTURE OVERLAY
+   ============================================ */
 .noise-overlay {
   position: fixed;
   top: 0;
@@ -122,7 +170,9 @@ html.lenis body {
   background-repeat: repeat;
 }
 
-/* Glassmorphism */
+/* ============================================
+   GLASSMORPHISM
+   ============================================ */
 .glass {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
@@ -131,7 +181,7 @@ html.lenis body {
 }
 
 .dark .glass {
-  background: rgba(0, 0, 0, 0.25);
+  background: rgba(24, 24, 27, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -149,13 +199,15 @@ html.lenis body {
 .dark .glass-card {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 100%
+    rgba(39, 39, 42, 0.8) 0%,
+    rgba(24, 24, 27, 0.9) 100%
   );
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Gradient text */
+/* ============================================
+   GRADIENT TEXT
+   ============================================ */
 .gradient-text {
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 50%, var(--color-neon-cyan) 100%);
   background-size: 200% auto;
@@ -164,7 +216,6 @@ html.lenis body {
   background-clip: text;
 }
 
-/* Animated gradient text */
 @keyframes gradient-shift {
   0%, 100% {
     background-position: 0% 50%;
@@ -183,7 +234,9 @@ html.lenis body {
   animation: gradient-shift 4s ease infinite;
 }
 
-/* Glow effects */
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
 .glow-primary {
   box-shadow: 0 0 40px rgba(139, 92, 246, 0.3),
               0 0 80px rgba(139, 92, 246, 0.15),
@@ -201,7 +254,6 @@ html.lenis body {
               0 0 80px rgba(6, 182, 212, 0.15);
 }
 
-/* Text glow */
 .text-glow {
   text-shadow: 0 0 20px rgba(139, 92, 246, 0.5),
                0 0 40px rgba(139, 92, 246, 0.3),
@@ -214,17 +266,41 @@ html.lenis body {
                0 0 90px rgba(139, 92, 246, 0.2);
 }
 
-/* Radial gradient background */
+/* ============================================
+   BACKGROUND EFFECTS
+   ============================================ */
 .bg-gradient-radial {
   background: radial-gradient(circle, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%);
 }
 
-/* Conic gradient */
 .bg-gradient-conic {
   background: conic-gradient(from 180deg at 50% 50%, var(--color-primary), var(--color-accent), var(--color-neon-cyan), var(--color-primary));
 }
 
-/* Animated border gradient */
+/* Mesh gradient backgrounds */
+.mesh-gradient {
+  background: 
+    radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.06) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.06) 0px, transparent 50%);
+}
+
+.dark .mesh-gradient {
+  background: 
+    radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
+    radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+}
+
+/* ============================================
+   ANIMATED BORDER GRADIENT
+   ============================================ */
 @keyframes border-rotate {
   0% {
     --angle: 0deg;
@@ -259,7 +335,9 @@ html.lenis body {
   animation: border-rotate 4s linear infinite;
 }
 
-/* Hide scrollbar for horizontal scrolling sections */
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -269,7 +347,6 @@ html.lenis body {
   display: none;
 }
 
-/* Custom scrollbar for main page */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -288,32 +365,40 @@ html.lenis body {
   background: linear-gradient(180deg, var(--color-accent), var(--color-primary));
 }
 
-/* Selection */
+/* ============================================
+   SELECTION & FOCUS
+   ============================================ */
 ::selection {
   background: var(--color-primary);
   color: var(--color-primary-foreground);
 }
 
-/* Focus visible */
 :focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Smooth transitions for theme changes */
-* {
-  transition-property: background-color, border-color, color;
-  transition-duration: 150ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+/* ============================================
+   SMOOTH THEME TRANSITIONS
+   ============================================ */
+html.transitioning,
+html.transitioning *,
+html.transitioning *::before,
+html.transitioning *::after {
+  transition: background-color 0.3s ease, 
+              color 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease !important;
 }
 
-/* Disable transitions for animations */
 .no-transition,
 .no-transition * {
   transition: none !important;
 }
 
-/* Loading animation */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
 @keyframes pulse-glow {
   0%, 100% {
     opacity: 0.6;
@@ -329,7 +414,6 @@ html.lenis body {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-/* Float animation */
 @keyframes float {
   0%, 100% {
     transform: translateY(0) rotate(0deg);
@@ -357,7 +441,6 @@ html.lenis body {
   animation: float 4s ease-in-out infinite;
 }
 
-/* Shimmer effect */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -373,7 +456,6 @@ html.lenis body {
   animation: shimmer 2s infinite;
 }
 
-/* Spotlight effect */
 @keyframes spotlight {
   0% {
     opacity: 0;
@@ -396,7 +478,6 @@ html.lenis body {
   animation: spotlight 1s ease-out forwards;
 }
 
-/* Glow line */
 @keyframes glow-line {
   0%, 100% {
     opacity: 0.3;
@@ -414,7 +495,6 @@ html.lenis body {
   animation: glow-line 3s ease-in-out infinite;
 }
 
-/* Rotate animation */
 @keyframes rotate-slow {
   from {
     transform: rotate(0deg);
@@ -428,7 +508,6 @@ html.lenis body {
   animation: rotate-slow 20s linear infinite;
 }
 
-/* Scale pulse */
 @keyframes scale-pulse {
   0%, 100% {
     transform: scale(1);
@@ -442,7 +521,9 @@ html.lenis body {
   animation: scale-pulse 3s ease-in-out infinite;
 }
 
-/* Horizontal scroll container */
+/* ============================================
+   HORIZONTAL SCROLL
+   ============================================ */
 .horizontal-scroll-section {
   position: relative;
   height: 100vh;
@@ -463,7 +544,9 @@ html.lenis body {
   will-change: transform;
 }
 
-/* Card hover lift effect */
+/* ============================================
+   CARD EFFECTS
+   ============================================ */
 .card-lift {
   transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
               box-shadow 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -471,8 +554,8 @@ html.lenis body {
 
 .card-lift:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25),
-              0 0 40px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15),
+              0 0 40px rgba(139, 92, 246, 0.1);
 }
 
 .dark .card-lift:hover {
@@ -512,12 +595,13 @@ html.lenis body {
   z-index: -1;
 }
 
-/* Magnetic button effect container */
 .magnetic-wrap {
   display: inline-block;
 }
 
-/* Underline animation */
+/* ============================================
+   LINK UNDERLINE
+   ============================================ */
 .link-underline {
   position: relative;
 }
@@ -537,35 +621,18 @@ html.lenis body {
   width: 100%;
 }
 
-/* Section divider */
+/* ============================================
+   SECTION DIVIDER
+   ============================================ */
 .section-divider {
   width: 100%;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-border), transparent);
 }
 
-/* Mesh gradient background */
-.mesh-gradient {
-  background: 
-    radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.1) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(139, 92, 246, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
-}
-
-.dark .mesh-gradient {
-  background: 
-    radial-gradient(at 40% 20%, rgba(139, 92, 246, 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(168, 85, 247, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 50%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(168, 85, 247, 0.2) 0px, transparent 50%),
-    radial-gradient(at 80% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%);
-}
-
-/* Input focus glow */
+/* ============================================
+   INPUT FOCUS
+   ============================================ */
 input:focus,
 textarea:focus,
 select:focus {
@@ -580,7 +647,22 @@ select:focus {
               0 0 30px rgba(139, 92, 246, 0.2);
 }
 
-/* Text reveal animation */
+/* Dark mode input backgrounds */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: rgba(39, 39, 42, 0.5);
+  color: #fafafa;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgba(161, 161, 170, 0.7);
+}
+
+/* ============================================
+   TEXT REVEAL ANIMATION
+   ============================================ */
 @keyframes text-reveal {
   from {
     clip-path: inset(0 100% 0 0);
@@ -600,3 +682,10 @@ select:focus {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+/* ============================================
+   3D CANVAS BACKGROUNDS - DARK MODE
+   ============================================ */
+.dark canvas {
+  opacity: 0.7;
+}
