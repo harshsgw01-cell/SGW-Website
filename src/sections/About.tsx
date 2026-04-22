@@ -11,6 +11,7 @@ import {
 } from '@/components/AnimatedSection'
 import { GradientText } from '@/components/TextReveal'
 import { Section3D } from '@/components/Section3D'
+import { getLenis } from '@/hooks/useLenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -467,9 +468,12 @@ export function About() {
                   href="#contact"
                   onClick={(e) => {
                     e.preventDefault()
-                    document
-                      .querySelector('#contact')
-                      ?.scrollIntoView({ behavior: 'smooth' })
+                    const lenis = getLenis()
+                    if (lenis) {
+                      lenis.scrollTo('#contact', { offset: -80, duration: 1.2 })
+                    } else {
+                      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })
+                    }
                   }}
                   className="px-8 py-3 rounded-xl bg-gradient-to-r from-primary to-accent
                              text-primary-foreground font-semibold text-sm
@@ -483,9 +487,12 @@ export function About() {
                   href="#portfolio"
                   onClick={(e) => {
                     e.preventDefault()
-                    document
-                      .querySelector('#portfolio')
-                      ?.scrollIntoView({ behavior: 'smooth' })
+                    const lenis = getLenis()
+                    if (lenis) {
+                      lenis.scrollTo('#portfolio', { offset: -80, duration: 1.2 })
+                    } else {
+                      document.querySelector('#portfolio')?.scrollIntoView({ behavior: 'smooth' })
+                    }
                   }}
                   className="px-8 py-3 rounded-xl border border-border/80 bg-card/50
                              text-foreground font-semibold text-sm backdrop-blur-sm

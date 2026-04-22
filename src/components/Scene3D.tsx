@@ -320,8 +320,8 @@ function SceneContent({
       <GlowingOrb position={[-4, -1, -4]} color={accentColor} />
       <GlowingOrb position={[0, 3, -5]} color={primaryColor} />
 
-      {/* Particles */}
-      <ParticleField count={1000} color={particleColor} opacity={particleOpacity} />
+      {/* Particles - reduced count for performance */}
+      <ParticleField count={600} color={particleColor} opacity={particleOpacity} />
 
       {/* Mouse follower */}
       <MouseFollower />

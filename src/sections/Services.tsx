@@ -24,6 +24,7 @@ import {
   StaggerItem,
 } from '@/components/AnimatedSection'
 import { Section3D } from '@/components/Section3D'
+import { getLenis } from '@/hooks/useLenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -317,9 +318,12 @@ function ServiceModal({
           <motion.button
             onClick={() => {
               onClose()
-              document
-                .getElementById('contact')
-                ?.scrollIntoView({ behavior: 'smooth' })
+              const lenis = getLenis()
+              if (lenis) {
+                lenis.scrollTo('#contact', { offset: -80, duration: 1.2 })
+              } else {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+              }
             }}
             className={cn(
               'mt-8 w-full py-4 rounded-xl font-semibold text-white text-center flex items-center justify-center gap-2 bg-gradient-to-r group',

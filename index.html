@@ -19,9 +19,14 @@
 <!-- CRITICAL: minimal, variable-based baseline to avoid FOUC -->
 <style>
     :root {
-      /* match @theme inline light values from global.css */
+      /* Match @theme inline light values from globals.css */
       --color-background: #f9fafb;
-      --color-foreground: #020617;
+      --color-foreground: #0f172a;
+    }
+
+    .dark {
+      --color-background: #020617;
+      --color-foreground: #f1f5f9;
     }
 
     html {
@@ -35,7 +40,7 @@
       margin: 0;
     }
 
-    /* Optional smooth theme transition */
+    /* Smooth theme transition */
     html.transitioning,
     html.transitioning * {
       transition:

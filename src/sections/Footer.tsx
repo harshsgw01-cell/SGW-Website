@@ -9,6 +9,7 @@ import {
   Heart,
 } from 'lucide-react'
 import { Section3D } from '@/components/Section3D'
+import { getLenis } from '@/hooks/useLenis'
 
 const footerLinks = {
   services: [
@@ -46,12 +47,22 @@ export function Footer() {
   const isInView = useInView(footerRef, { once: true, margin: '-100px' })
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const lenis = getLenis()
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2 })
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   }
 
   const scrollToSection = (href: string) => {
     if (!href.startsWith('#')) return
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    const lenis = getLenis()
+    if (lenis) {
+      lenis.scrollTo(href, { offset: -80, duration: 1.2 })
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (

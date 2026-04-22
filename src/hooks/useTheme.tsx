@@ -32,8 +32,8 @@ const TRANSITION_DURATION = 350
 const VALID_THEMES: Theme[] = ['dark', 'light', 'system']
 
 const THEME_COLORS: Record<ResolvedTheme, { bg: string; fg: string }> = {
-  dark: { bg: '#0a0a0f', fg: '#fafafa' },
-  light: { bg: '#fafafa', fg: '#0a0a0f' },
+  dark: { bg: '#020617', fg: '#f1f5f9' },
+  light: { bg: '#f9fafb', fg: '#0f172a' },
 }
 
 

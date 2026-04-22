@@ -2,31 +2,59 @@
 
 /* ============================================
    THEME CONFIGURATION - TAILWIND V4
-                                                                 Refined violet / cyan / slate palette=============================================*/
+   Refined violet / cyan / slate palette
+   ============================================ */
 @theme inline {
-  /* Light mode */
-    --color-background: #f9fafb;
-    --color-foreground: #200069;
+  /* Typography - Font families */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Georgia', 'Cambria', serif;
+  --font-mono: 'Fira Code', 'Consolas', monospace;
+  --font-heading: 'Poppins', 'Inter', sans-serif;
+
+  /* Typography Scale - Standardized sizing */
+  --text-heading-xl: clamp(2.5rem, 5vw, 4rem);
+  --text-heading-lg: clamp(2rem, 4vw, 3rem);
+  --text-heading-md: clamp(1.5rem, 3vw, 2rem);
+  --text-body-lg: 1.125rem;
+  --text-body-md: 1rem;
+  --text-caption: 0.875rem;
+
+  /* Animation Duration - Consistent timing */
+  --duration-fast: 0.2s;
+  --duration-normal: 0.35s;
+  --duration-slow: 0.5s;
+  --duration-slower: 0.8s;
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Spacing Scale */
+  --section-spacing: clamp(4rem, 8vw, 8rem);
+  --container-padding: clamp(1rem, 4vw, 2rem);
+
+  /* Light mode colors */
+  --color-background: #f9fafb;
+  --color-foreground: #0f172a;
   --color-card: #ffffff;
   --color-card-foreground: #020617;
   --color-popover: #ffffff;
   --color-popover-foreground: #020617;
   --color-primary: #7c3aed;
-  --color-primary-foreground: #f9fafb;
-  
-    --color-secondary: #f3f4f6;
-    --color-secondary-foreground: #111827;
-  
-    --color-muted: #e5e7eb;
-    --color-muted-foreground: #6b7280;
-  
-    --color-accent: #06b6d4;
-    --color-accent-foreground: #020617;
-  
-    --color-border: #e5e7eb;
-    --color-input: #e5e7eb;
+  --color-primary-foreground: #fafafa;
+
+  --color-secondary: #f1f5f9;
+  --color-secondary-foreground: #1e293b;
+
+  --color-muted: #e2e8f0;
+  --color-muted-foreground: #64748b;
+
+  --color-accent: #06b6d4;
+  --color-accent-foreground: #020617;
+
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
   --color-ring: #7c3aed;
 
+  /* Neon accent colors */
   --color-neon-blue: #3b82f6;
   --color-neon-purple: #a855f7;
   --color-neon-cyan: #06b6d4;
@@ -34,32 +62,34 @@
 }
 
 /* ============================================
-                                                                 DARK MODE THEME Complete dark background=============================================*/
+   DARK MODE THEME - Complete dark background
+   ============================================ */
 .dark {
   --color-background: #020617 !important;
-    /* deep slate */
-    --color-foreground: #e5e7eb !important;
-  
-    --color-card: #020617 !important;
-    --color-card-foreground: #f9fafb !important;
-  
-    --color-popover: #020617 !important;
-    --color-popover-foreground: #f9fafb !important;
+  --color-foreground: #f1f5f9 !important;
+
+  --color-card: #0f172a !important;
+  --color-card-foreground: #f8fafc !important;
+
+  --color-popover: #0f172a !important;
+  --color-popover-foreground: #f8fafc !important;
   --color-primary: #8b5cf6 !important;
   --color-primary-foreground: #020617 !important;
-  
-    --color-secondary: #020617 !important;
-    --color-secondary-foreground: #f9fafb !important;
-  
-    --color-muted: #020617 !important;
-  --color-muted-foreground: #a1a1aa !important;
---color-accent: #22d3ee !important;
+
+  --color-secondary: #1e293b !important;
+  --color-secondary-foreground: #f1f5f9 !important;
+
+  --color-muted: #1e293b !important;
+  --color-muted-foreground: #94a3b8 !important;
+
+  --color-accent: #22d3ee !important;
   --color-accent-foreground: #020617 !important;
 
-  --color-border: #1f2937 !important;
-  --color-input: #020617 !important;
+  --color-border: #334155 !important;
+  --color-input: #1e293b !important;
   --color-ring: #8b5cf6 !important;
 
+  /* Neon accent colors - brighter in dark mode */
   --color-neon-blue: #60a5fa !important;
   --color-neon-purple: #c084fc !important;
   --color-neon-cyan: #22d3ee !important;
@@ -105,15 +135,13 @@ section {
 
 /* Cards and containers in dark mode */
 .dark .bg-card\/80,
-.dark .bg-card\/50,
-.dark [class*="bg-card"] {
-  background-color: rgba(24, 24, 27, 0.8) !important;
+.dark .bg-card\/50 {
+  background-color: rgba(15, 23, 42, 0.8) !important;
 }
 
 .dark .bg-secondary\/50,
-.dark .bg-secondary\/80,
-.dark [class*="bg-secondary"] {
-  background-color: rgba(39, 39, 42, 0.5) !important;
+.dark .bg-secondary\/80 {
+  background-color: rgba(30, 41, 59, 0.5) !important;
 }
 
 /* ============================================
@@ -174,13 +202,13 @@ html.lenis body {
 }
 
 .dark .glass {
-  background: rgba(24, 24, 27, 0.7);
+  background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-card {
   background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.1) 0%,
       rgba(255, 255, 255, 0.05) 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -189,8 +217,8 @@ html.lenis body {
 
 .dark .glass-card {
   background: linear-gradient(135deg,
-        rgba(39, 39, 42, 0.8) 0%,
-      rgba(24, 24, 27, 0.9) 100%);
+      rgba(30, 41, 59, 0.8) 0%,
+      rgba(15, 23, 42, 0.9) 100%);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -676,8 +704,8 @@ select:focus {
 .dark input,
 .dark textarea,
 .dark select {
-  background-color: rgba(39, 39, 42, 0.5);
-  color: #fafafa;
+  background-color: rgba(30, 41, 59, 0.5);
+  color: #f8fafc;
 }
 
 .dark input::placeholder,
@@ -700,6 +728,20 @@ select:focus {
 
 .text-reveal {
   animation: text-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+
+/* Orbit animation for loading screen particles */
+@keyframes orbit {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
 }
 
 /* stagger helpers */
@@ -725,7 +767,94 @@ select:focus {
 
 /* ============================================
    3D CANVAS BACKGROUNDS - DARK MODE
-                                                                 =============================================*/
+   ============================================ */
 .dark canvas {
   opacity: 0.7;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Force GPU acceleration on animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Optimize blur performance */
+.blur-optimized {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Portfolio card optimization */
+.portfolio-card {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ============================================
+   SECTION BACKGROUNDS - THEME AWARE
+   ============================================ */
+
+/* Alternating section backgrounds for visual hierarchy */
+.section-bg-primary {
+  background-color: var(--color-background);
+}
+
+.section-bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.dark .section-bg-secondary {
+  background-color: rgba(15, 23, 42, 0.5);
+}
+
+/* ============================================
+   TYPOGRAPHY UTILITIES
+   ============================================ */
+
+.text-heading-xl {
+  font-size: var(--text-heading-xl);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-heading-lg {
+  font-size: var(--text-heading-lg);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+
+.text-heading-md {
+  font-size: var(--text-heading-md);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-body-lg {
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+}
+
+.text-body-md {
+  font-size: var(--text-body-md);
+  line-height: 1.5;
+}
+
+.text-caption {
+  font-size: var(--text-caption);
+  line-height: 1.4;
 }

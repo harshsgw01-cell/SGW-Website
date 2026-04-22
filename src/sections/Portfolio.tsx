@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ExternalLink, Github } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { AnimatedSection } from '@/components/AnimatedSection'
+import { getLenis } from '@/hooks/useLenis'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -263,9 +264,14 @@ export function Portfolio() {
           start: 'top top',
           end: () => `+=${getTotalWidth()}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.8,
           invalidateOnRefresh: true,
           anticipatePin: 1,
+          snap: {
+            snapTo: 1 / (projects.length),
+            duration: { min: 0.2, max: 0.4 },
+            ease: 'power2.inOut',
+          },
           onUpdate: (self) => {
             setScrollProgress(self.progress)
           },
@@ -431,11 +437,14 @@ export function Portfolio() {
                 </p>
                 <motion.button
                   type="button"
-                  onClick={() =>
-                    document
-                      .getElementById('contact')
-                      ?.scrollIntoView({ behavior: 'smooth' })
-                  }
+                  onClick={() => {
+                    const lenis = getLenis()
+                    if (lenis) {
+                      lenis.scrollTo('#contact', { offset: -80, duration: 1.2 })
+                    } else {
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
                   className="px-8 py-4 rounded-xl bg-gradient-to-r from-primary to-accent text-white font-semibold shadow-lg btn-glow"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
